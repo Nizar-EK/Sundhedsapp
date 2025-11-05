@@ -1,0 +1,14 @@
+patients:
+  id:
+    1:
+      age: 70
+      allergies: true
+      blood_type: o-
+      first_name: Donald
+      last_name: Trump
+    2:
+      age: 66
+      allergies: Peanuts
+      blood_type: A+
+      first_name: Lone
+      last_name: Hansen
