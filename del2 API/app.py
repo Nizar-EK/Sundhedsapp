@@ -26,9 +26,19 @@ def write_yaml(data):
 @app.post("/add_patient")
 @app.input(PatientIn)
 def add_new_patient(json_data):
+    """
+    Adds new patients to the YAML file
+    """
     print(json_data)
     data = read_yaml()
     new = data.get("patients").get("id")
     new.setdefault(len(new) + 1, json_data)
     write_yaml(data)
     return {"message": "created"}, 201
+
+@app.get("/health_data")
+def get_health_data():
+    """
+    Get all data about patients
+    """
+    return read_yaml()
