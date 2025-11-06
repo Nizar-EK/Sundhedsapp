@@ -12,3 +12,9 @@ patients:
       blood_type: A+
       first_name: Lone
       last_name: Hansen
+    3:
+      age: 40
+      allergies: 'No'
+      bloodtype: B+
+      first_name: Lars
+      last_name: Larsen
