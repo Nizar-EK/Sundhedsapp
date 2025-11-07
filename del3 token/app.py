@@ -63,6 +63,7 @@ def add_new_patient(json_data):
     return {"message": "created"}, 201
 
 @app.get("/health_data")
+@app.auth_required(auth)
 def get_health_data():
     """
     Get all data about patients
