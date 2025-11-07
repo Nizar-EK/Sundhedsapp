@@ -1,9 +1,15 @@
 import yaml
-from flask import current_app
+from flask import current_app, render_template
 from apiflask import APIFlask, Schema, HTTPTokenAuth, abort
 from apiflask.fields import Integer, String
 from authlib.jose import jwt, JoseError
 import secrets
+import pandas as pd
+import json
+import plotly
+import plotly.express as px
+from plotly.utils import PlotlyJSONEncoder
+
 
 app = APIFlask(__name__)
 auth = HTTPTokenAuth(scheme="Bearer")
@@ -96,3 +102,46 @@ def get_token(id : int):
 @app.auth_required(auth)
 def get_secret(id):
     return auth.current_user.secret
+
+@app.get("/bar")
+def bar():
+    data = read_yaml() or {}
+    patients = ((data.get("patients") or {}).get("id") or {})
+
+# Byg data-rows fra YAML
+    rows = []
+    for _, p in patients.items():
+        first = (p or {}).get("first_name", "")
+        last  = (p or {}).get("last_name", "")
+        name  = f"{first} {last}".strip()
+        age   = (p or {}).get("age", None)
+        rows.append({"name": name, "age": age})
+
+ # Lav Plotly figur
+    df = pd.DataFrame(rows)
+    df["age"] = pd.to_numeric(df.get("age"), errors="coerce")
+
+    if df.empty:
+        fig = px.bar(title="Ingen patientdata i YAML")
+    else:
+        fig = px.bar(
+            df, x="name", y="age", 
+                     title="Alder pr. patient",
+                     labels={"name":"Patient", "age":"Alder (år)"}
+        )
+
+        # Vis tal ovenpå søjler og pænere layout
+        fig.update_traces(
+            text=df["age"],
+            texttemplate="%{text}",
+            textposition="outside",
+            hovertemplate="%{x}<br>Alder: %{y} år<extra></extra>"
+        )
+        fig.update_layout(
+            xaxis_title="Patient",
+            yaxis_title="Alder (år)",
+            margin=dict(t=60, r=20, b=90, l=60),
+            xaxis=dict(tickangle=-15)
+        )
+    graphJSON = json.dumps(fig, cls=PlotlyJSONEncoder)
+    return render_template("bar.html", graphJSON=graphJSON)
