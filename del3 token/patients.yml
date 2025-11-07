@@ -18,3 +18,15 @@ patients:
       bloodtype: B+
       first_name: Lars
       last_name: Larsen
+    4:
+      age: 0
+      allergies: string
+      bloodtype: string
+      first_name: string
+      last_name: string
+    5:
+      age: 50
+      allergies: allergen
+      bloodtype: 0+
+      first_name: John
+      last_name: Doe
