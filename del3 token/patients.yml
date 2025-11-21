@@ -30,3 +30,15 @@ patients:
       bloodtype: 0+
       first_name: John
       last_name: Doe
+    6:
+      age: 35
+      allergies: "Valn\xF8dder"
+      bloodtype: AB+
+      first_name: Jacob
+      last_name: Jacobsen
+    7:
+      age: 35
+      allergies: "Valn\xF8dder"
+      bloodtype: AB+
+      first_name: Jacob
+      last_name: Jacobsen
