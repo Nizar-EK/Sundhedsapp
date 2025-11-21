@@ -1,0 +1,6 @@
+APIFlask
+Flask
+PyYAML
+authlib
+pandas
+plotly
