@@ -28,8 +28,8 @@ Denne mappe indeholder projektets mest funktionelle udgave.
 
 # Sådan kommer man i gang (del3_token)
 
-cd del3_token
-pip install -r requirements.txt
-apiflask run --debug
+- cd del3_token
+- pip install -r requirements.txt
+- apiflask run --debug
 
 
